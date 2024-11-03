@@ -1,0 +1,13 @@
+# mysql-loadbalancer-service.yaml
+apiVersion: v1
+kind: Service                       # Defines the kind of Kubernetes resource you're creating, here it's a service for mySQL depolyed pods.
+metadata:
+  name: mysql-loadbalancer-service  # Metadata section where 'name' defines the name of the service, here it’s 'mysql-loadbalancer-service'.
+spec:
+  selector:
+    app: mysql-deploy              # The selector is used to find which pods this services manages, matching pods with the label 'app: mysql-deploy'.
+  ports:
+  - protocol: TCP
+    port: 3306         # The external port on the load balancer (3306).
+    targetPort: 3306   # The port on the mysql pod the service will forward to (3306).
+  type: LoadBalancer

@@ -1,0 +1,14 @@
+# redis-nodeport-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-nodeport-service
+spec:
+  selector:
+    app: redis-deploy 
+  ports:
+  - protocol: TCP
+    port: 6379          # Port that the service will expose
+    targetPort: 6379    # Port the container is listening on
+    nodePort: 30007     # NodePort to expose (within the range 30000-32767)  Fixed external port on the node (30007), allowing access at NodeIP:30007
+  type: NodePort        # Makes the service accessible from outside the cluster via the node’s IP address
