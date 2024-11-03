@@ -1,0 +1,26 @@
+apiVersion: apps/v1                      # Specifies the Kubernetes API version for the Deployment resource
+kind: Deployment                         # Defines the type of resource as a Deployment
+metadata:
+  name: httpbin-deployment               # Sets the name of the Deployment
+spec:
+  replicas: 2                            # Specifies the number of replicas (pods) to run
+  selector:
+    matchLabels:
+      app: httpbin                       # Matches pods with the label app: httpbin to associate with this Deployment
+  template:
+    metadata:
+      labels:
+        app: httpbin                     # Adds the label app: httpbin to the pods created by this Deployment
+    spec:
+      containers:
+      - name: httpbin                    # Container name for identification
+        image: kennethreitz/httpbin      # Container image for HTTPbin application
+        resources:
+          requests:
+            memory: "128Mi"              # Minimum memory allocated for the container
+            cpu: "150m"                  # Minimum CPU allocated for the container (150 millicores)
+          limits:
+            memory: "256Mi"              # Maximum memory the container can use
+            cpu: "500m"                  # Maximum CPU the container can use
+        ports:
+        - containerPort: 80              # Port on the container where the app is exposed

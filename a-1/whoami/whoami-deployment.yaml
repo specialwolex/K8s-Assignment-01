@@ -1,0 +1,26 @@
+apiVersion: apps/v1                     # Specifies the Kubernetes API version for the Deployment resource
+kind: Deployment                         # Defines the type of resource as a Deployment
+metadata:
+  name: whoami-deployment                # Sets the name of the Deployment
+spec:
+  replicas: 2                            # Specifies the number of replicas (pods) to run
+  selector:
+    matchLabels:
+      app: whoami                        # Matches pods with the label app: whoami to associate with this Deployment
+  template:
+    metadata:
+      labels:
+        app: whoami                      # Adds the label app: whoami to the pods created by this Deployment
+    spec:
+      containers:
+      - name: whoami                     # Container name for identification
+        image: containous/whoami         # Container image for whoami application
+        resources:
+          requests:
+            memory: "64Mi"               # Minimum memory allocated for the container
+            cpu: "100m"                  # Minimum CPU allocated for the container (100 millicores)
+          limits:
+            memory: "128Mi"              # Maximum memory the container can use
+            cpu: "250m"                  # Maximum CPU the container can use
+        ports:
+        - containerPort: 80              # Port on the container where the app is exposed
