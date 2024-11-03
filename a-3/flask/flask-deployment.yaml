@@ -1,0 +1,26 @@
+apiVersion: apps/v1                       # Specifies the API version for Deployment
+kind: Deployment                           # Declares the resource type as a Deployment
+metadata:
+  name: flask-deployment                   # Name of the Deployment
+spec:
+  replicas: 1                              # Number of replicas for the application
+  selector:
+    matchLabels:
+      app: flask                           # Label selector for identifying the pods
+  template:
+    metadata:
+      labels:
+        app: flask                         # Label for the application pod
+    spec:
+      containers:
+      - name: flask                        # Name of the container
+        image: tiangolo/uwsgi-nginx-flask # The image for the Flask application
+        ports:
+        - containerPort: 80                # Port that the container listens on
+        resources:                         # Resources limits and requests
+          requests:
+            memory: "128Mi"                # Minimum memory requested
+            cpu: "500m"                    # Minimum CPU requested
+          limits:
+            memory: "256Mi"                # Maximum memory allowed
+            cpu: "1"                       # Maximum CPU allowed
