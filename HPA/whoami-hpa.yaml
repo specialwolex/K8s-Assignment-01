@@ -1,0 +1,18 @@
+apiVersion: autoscaling/v2                 # Specifies the API version for HPA
+kind: HorizontalPodAutoscaler              # Declares the resource type as an HPA
+metadata:
+  name: whoami-hpa                         # Name of the HPA
+spec:
+  scaleTargetRef:                          # Reference to the deployment to be autoscaled
+    apiVersion: apps/v1                    # API version of the target resource
+    kind: Deployment                       # Specifies the target as a Deployment
+    name: whoami-deployment                # Name of the target deployment
+  minReplicas: 1                           # Minimum number of replicas the HPA will maintain
+  maxReplicas: 5                           # Maximum number of replicas the HPA will scale up to
+  metrics:
+  - type: Resource                         # Specifies that resource metrics are being used
+    resource:
+      name: cpu                            # Targeting CPU usage for scaling
+      target:
+        type: Utilization                  # Specifies that scaling is based on percentage utilization
+        averageUtilization: 50             # Target CPU utilization percentage
